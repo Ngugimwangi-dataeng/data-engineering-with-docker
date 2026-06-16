@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  ny_taxi_db:
+    image: postgres:18
+    container_name: ny_taxi_db
+    environment:
+      - POSTGRES_USER=alex
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db1
+    volumes:
+      - ny_taxi_postgres_data:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+
+volumes:
+  ny_taxi_postgres_data:
+
+# to run from terminal type (docker-compose up -d)
+# to stop from terminal type (docker-compose down)
+# to end pgcli \q and go back to terminal
