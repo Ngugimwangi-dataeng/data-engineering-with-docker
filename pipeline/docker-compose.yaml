@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  ny_taxi_db:
+  pg-database:
     image: postgres:18
     container_name: ny_taxi_db
     environment:
@@ -12,9 +10,44 @@ services:
       - ny_taxi_postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
+    networks:
+      - pg-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+      - PGADMIN_CONFIG_WTF_CSRF_CHECK_DEFAULT=False
+      - PGADMIN_CONFIG_WTF_CSRF_ENABLED=False
+      - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=False
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "8085:80"
+    networks:
+      - pg-network
+    depends_on:
+      - pg-database
 
 volumes:
   ny_taxi_postgres_data:
+  pgadmin_data:
+
+networks:
+  pg-network:
+    name: pg-network
+    external: true
+
+# Check if pgadmin_data volume exists
+#docker volume ls | grep pgadmin
+
+# Stop your existing containers first
+#docker rm -f ny_taxi_db pgadmin
+
+# Then start with compose
+#docker compose up -d    
 
 # to run from terminal type (docker-compose up -d)
 # to stop from terminal type (docker-compose down)

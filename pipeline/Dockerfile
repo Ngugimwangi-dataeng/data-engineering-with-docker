@@ -41,27 +41,25 @@ COPY ingest_data.py ./
 ENTRYPOINT ["python", "ingest_data.py"]
 
 # Commands to manage the PostgreSQL container
- docker run -d \
-   --name ny_taxi_db \
-   -e POSTGRES_USER="alex" \
-   -e POSTGRES_PASSWORD="root" \
-   -e POSTGRES_DB="db1" \
-   -v ny_taxi_postgres_data:/var/lib/postgresql \
-   -p 5432:5432 \
-   --network=pg-network \
-   postgres:18
-#   docker-compose up -d run this first
+# docker run -d \
+ #  --name ny_taxi_db \
+ #  -e POSTGRES_USER="alex" \
+#   -e POSTGRES_PASSWORD="root" \
+ #  -e POSTGRES_DB="db1" \
+ #  -v ny_taxi_postgres_data:/var/lib/postgresql \
+ #  -p 5432:5432 \
+  # --network=pg-network \
+   #postgres:18
+#   docker-compose up -d run this first  docker compose down
 #   python ingest_data.py followed
 #   # to start docker start ny_taxi_db
 #   # to stop docker stop ny_taxi_db
 #  uv run pgcli -h localhost -p 5432 -U alex -d db1 run this first
 
-docker run -it \
-  --network=pg-network \
-  taxi_ingest:v001 \
-    --pg-user=alex \
-    --pg-pass=root \
-    --pg-host=pgdatabase \
-    --pg-port=5432 \
-    --pg-db=db1 \
-    --target-table=yellow_taxi_trips
+##docker run -it \
+ # --network=pg-network \
+  #taxi_ingest:v001 \
+   #--pg-host=pgdatabase \
+    #--pg-port=5432 \
+   # --pg-db=db1 \
+   # --target-table=yellow_taxi_trips
